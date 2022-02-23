@@ -7,6 +7,7 @@
         public Cart Cart { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        public double SalePrice { get; set; }
         public int Quantity { get; set; }
     }
 }

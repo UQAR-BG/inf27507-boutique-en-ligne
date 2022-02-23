@@ -3,6 +3,7 @@ using System;
 using INF27507_Boutique_En_Ligne;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INF27507_Boutique_En_Ligne.Migrations
 {
     [DbContext(typeof(BoutiqueDbContext))]
-    partial class BoutiqueDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220223210524_Initial-Migration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
