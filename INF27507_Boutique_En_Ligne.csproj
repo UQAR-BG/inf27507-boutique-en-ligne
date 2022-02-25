@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\Payment\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>
