@@ -14,7 +14,10 @@ namespace INF27507_Boutique_En_Ligne.Services
             if (instance == null)
             {
                 mutex.WaitOne();
-                instance = new Lazy<ServicesFactory>(() => new ServicesFactory());
+
+                if (instance == null)
+                    instance = new Lazy<ServicesFactory>(() => new ServicesFactory());
+
                 mutex.ReleaseMutex();
             }
                 

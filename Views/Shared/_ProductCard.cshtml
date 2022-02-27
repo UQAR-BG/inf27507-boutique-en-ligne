@@ -1,4 +1,5 @@
-﻿@model INF27507_Boutique_En_Ligne.Models.Product
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model INF27507_Boutique_En_Ligne.Models.Product
 
 <div class="card mb-2">
     <div class="card-body">
@@ -18,5 +19,11 @@
                 </div>
             </div>
         </div>
+        <a 
+            asp-controller="Product" 
+            asp-action="ProductPage"
+            asp-route-id="@Model.Id"
+            class="stretched-link"
+        ></a>
     </div>
 </div>

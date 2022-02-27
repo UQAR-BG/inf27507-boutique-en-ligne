@@ -37,6 +37,9 @@ namespace INF27507_Boutique_En_Ligne
         {
             modelBuilder.Entity<Client>().HasKey(client => client.Id).HasName("pk_clients_id");
             modelBuilder.Entity<Client>().HasMany(client => client.Carts).WithOne(cart => cart.Client);
+            modelBuilder.Entity<Client>().HasData(
+                new Client() { Id = 1, Username = "Default-User", Firstname = "Default", Lastname = "User", Balance = 250.00 }
+            );
 
             modelBuilder.Entity<Seller>().HasKey(seller => seller.Id).HasName("pk_sellers_id");
             modelBuilder.Entity<Seller>().HasMany(seller => seller.Products).WithOne(product => product.Seller);
