@@ -1,7 +1,7 @@
 ﻿using INF27507_Boutique_En_Ligne.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace INF27507_Boutique_En_Ligne.Services.Database
+namespace INF27507_Boutique_En_Ligne.Services
 {
     public class BoutiqueMySQLService
     {
@@ -12,17 +12,50 @@ namespace INF27507_Boutique_En_Ligne.Services.Database
             _dbContext = new BoutiqueDbContext();
         }
 
-        public Client GetClient(int Id)
+        public Client GetClient(int id)
         {
             return _dbContext.Clients
                 .Include(c => c.Carts)
-                .FirstOrDefault(c => c.Id == Id);
+                .FirstOrDefault(c => c.Id == id);
         }
 
-        /*public bool ClientHasActiveCart(int Id)
+        public Cart GetActiveCart(int clientId)
         {
+            return (from carts in _dbContext.Cart
+                   where carts.ClientId == clientId && carts.Active
+                   select carts).SingleOrDefault();
+        }
 
-        }*/
+        public Cart CreateActiveCart(int clientId)
+        {
+            Cart cart = new Cart() { ClientId = clientId, Active = true };
+            _dbContext.Cart.Add(cart);
+            _dbContext.SaveChanges();
+
+            return cart;
+        }
+
+        public Cart CreateActiveCartIfNotExist(int clientId)
+        {
+            Cart cart = GetActiveCart(clientId);
+            if (cart == null)
+                cart = CreateActiveCart(clientId);
+
+            return cart;
+        }
+
+        public void AddItem(int clientId, int productId, int quantity)
+        {
+            Cart cart = GetActiveCart(clientId);
+            Product product = GetProductForValidation(productId);
+
+            if (product != null && cart != null)
+            {
+                CartItem item = new CartItem() { CartId = cart.Id, ProductId = product.Id, Quantity = quantity };
+                _dbContext.CartItems.Add(item);
+                _dbContext.SaveChanges(true);
+            }
+        }
 
         public List<Product> GetAllProducts()
         {
@@ -43,6 +76,11 @@ namespace INF27507_Boutique_En_Ligne.Services.Database
                 .Include(p => p.Usage)
                 .Include(p => p.Gender)
                 .SingleOrDefault(p => p.Id == id);
+        }
+
+        private Product GetProductForValidation(int id)
+        {
+            return _dbContext.Products.Find(id);
         }
     }
 }

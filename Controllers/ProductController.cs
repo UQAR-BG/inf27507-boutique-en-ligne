@@ -1,5 +1,5 @@
 ﻿using INF27507_Boutique_En_Ligne.Models;
-using INF27507_Boutique_En_Ligne.Services.Database;
+using INF27507_Boutique_En_Ligne.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace INF27507_Boutique_En_Ligne.Controllers

@@ -1,13 +1,12 @@
-﻿using INF27507_Boutique_En_Ligne.Services.Database;
-
-namespace INF27507_Boutique_En_Ligne.Services
+﻿namespace INF27507_Boutique_En_Ligne.Services
 {
     public class ServicesFactory : IServicesFactory
     {
         private static Mutex mutex = new Mutex();
         private static Lazy<ServicesFactory> instance;
 
-        private readonly IDatabaseAdapter database;
+        private IDatabaseAdapter database;
+        private IAuthentificationAdapter auth;
 
         public static ServicesFactory getInstance()
         {
@@ -27,11 +26,17 @@ namespace INF27507_Boutique_En_Ligne.Services
         private ServicesFactory()
         {
             database = new MySQLDatabaseAdapter();
+            auth = new SimpleSessionAuthAdapter();
         }
 
         public IDatabaseAdapter GetDatabaseService()
         {
             return database;
+        }
+
+        public IAuthentificationAdapter GetAuthService()
+        {
+            return auth;
         }
     }
 }

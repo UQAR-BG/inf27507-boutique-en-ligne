@@ -1,5 +1,5 @@
 ﻿using INF27507_Boutique_En_Ligne.Models;
-using INF27507_Boutique_En_Ligne.Services.Database;
+using INF27507_Boutique_En_Ligne.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace INF27507_Boutique_En_Ligne.Controllers
@@ -7,10 +7,12 @@ namespace INF27507_Boutique_En_Ligne.Controllers
     public class CartController : Controller
     {
         private readonly IDatabaseAdapter _database;
+        private readonly IAuthentificationAdapter _authService;
 
-        public CartController(IDatabaseAdapter database)
+        public CartController(IDatabaseAdapter database, IAuthentificationAdapter authService)
         {
             _database = database;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -20,17 +22,17 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(int Id, int itemQuantity)
+        public IActionResult Add(int id, int itemQuantity)
         {
-            int? UserId = HttpContext.Session.GetInt32("UserId");
-            string? UserType = HttpContext.Session.GetString("UserType");
+            if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
+                return RedirectToAction("ProductPage", "Product", id);
 
-            if (UserId == null || UserType == null || !UserType.Equals("Client"))
-                return RedirectToAction("ProductPage", "Product", Id);
-
-            Client client = _database.GetClient((int)UserId);
+            Client client = _database.GetClient((int)HttpContext.Session.GetInt32("UserId"));
             if (client == null)
-                return RedirectToAction("ProductPage", "Product", Id);
+                return RedirectToAction("ProductPage", "Product", id);
+
+            _database.CreateActiveCartIfNotExist(client.Id);
+            _database.AddItem(client.Id, id, itemQuantity);
 
             return RedirectToAction("CartPage");
         }
