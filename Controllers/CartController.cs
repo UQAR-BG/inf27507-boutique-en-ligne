@@ -18,6 +18,22 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpGet]
         public IActionResult CartPage()
         {
+            if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
+                return RedirectToAction("Index", "Home");
+
+            int clientId = (int)HttpContext.Session.GetInt32("UserId");
+            Cart activeCart = _database.GetActiveCart(clientId);
+            List<CartItem> cartItems = _database.GetCartItems(activeCart.Id);
+
+            if (cartItems.Count == 0)
+                return RedirectToAction("CartEmpty");
+
+            return View(cartItems);
+        }
+
+        [HttpGet]
+        public IActionResult CartEmpty()
+        {
             return View();
         }
 

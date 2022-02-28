@@ -31,6 +31,16 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.CreateActiveCartIfNotExist(clientId);
         }
 
+        public List<CartItem> GetCartItems(int cartId)
+        {
+            return service.GetCartItems(cartId);
+        }
+
+        public CartItem GetCartItem(int cartId, int productId)
+        {
+            return service.GetCartItem(cartId, productId);
+        }
+
         public void AddItem(int clientId, int productId, int quantity)
         {
             service.AddItem(clientId, productId, quantity);

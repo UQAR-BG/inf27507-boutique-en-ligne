@@ -44,6 +44,22 @@ namespace INF27507_Boutique_En_Ligne.Services
             return cart;
         }
 
+        public List<CartItem> GetCartItems(int cartId)
+        {
+            return (from item in _dbContext.CartItems
+                    join product in _dbContext.Products on item.ProductId equals product.Id
+                    where item.CartId == cartId
+                    select item).ToList();
+        }
+
+        public CartItem GetCartItem(int cartId, int productId)
+        {
+            return (from item in _dbContext.CartItems
+                    join product in _dbContext.Products on item.ProductId equals product.Id
+                    where item.CartId == cartId && item.ProductId == productId
+                    select item).SingleOrDefault();
+        }
+
         public void AddItem(int clientId, int productId, int quantity)
         {
             Cart cart = GetActiveCart(clientId);
@@ -51,8 +67,18 @@ namespace INF27507_Boutique_En_Ligne.Services
 
             if (product != null && cart != null)
             {
-                CartItem item = new CartItem() { CartId = cart.Id, ProductId = product.Id, Quantity = quantity };
-                _dbContext.CartItems.Add(item);
+                CartItem item = GetCartItem(clientId, productId);
+
+                if (item == null)
+                {
+                    item = new CartItem() { CartId = cart.Id, ProductId = product.Id, Quantity = quantity };
+                    _dbContext.CartItems.Add(item);
+                }
+                else
+                {
+                    item.Quantity += quantity;
+                }
+
                 _dbContext.SaveChanges(true);
             }
         }

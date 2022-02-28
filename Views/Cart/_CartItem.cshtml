@@ -1,0 +1,32 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@model CartItem
+
+<div class="card mb-2">
+    <div class="card-body">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col">
+                        <a 
+                            asp-controller="Product" 
+                            asp-action="ProductPage"
+                            asp-route-id="@Model.Product.Id"
+                        >
+                            <img width="100" src="~/img/@Model.Product.Image">
+                        </a>
+                    </div>
+                    <div class="col">
+                        <h3>Informations : </h3>
+                        <b><i class="bi bi-tag-fill"></i> Titre :</b> @Model.Product.Title <br />
+                        <b><i class="bi bi-currency-dollar"></i> Price :</b> @Model.Product.Price.ToString("C") <br />
+                        <b><i class="bi bi-palette-fill"></i> Colour :</b> @Model.Product.Colour.Name <br />
+                        <b><i class="bi bi-person-fill"></i> Vendeur :</b> @Model.Product.Seller.Firstname @Model.Product.Seller.Lastname <hr/>
+                        <b>Number selected :</b> @Model.Quantity
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

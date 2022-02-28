@@ -1,0 +1,13 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Empty Cart";
+}
+
+<h1>Cart</h1>
+
+<div class="container">
+    <div class="row">
+        <p>Your cart is empty.</p>
+        <a asp-controller="Home" asp-action="Index" class="link-primary">Return to store</a>
+    </div>
+</div>
