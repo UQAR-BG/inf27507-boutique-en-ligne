@@ -26,7 +26,7 @@
         private ServicesFactory()
         {
             database = new MySQLDatabaseAdapter();
-            auth = new SimpleSessionAuthAdapter();
+            auth = new SimpleSessionAuthAdapter(database);
         }
 
         public IDatabaseAdapter GetDatabaseService()

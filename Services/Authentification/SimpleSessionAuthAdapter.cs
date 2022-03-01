@@ -4,9 +4,9 @@
     {
         private readonly SimpleSessionService _sessionService;
 
-        public SimpleSessionAuthAdapter()
+        public SimpleSessionAuthAdapter(IDatabaseAdapter database)
         {
-            _sessionService = new SimpleSessionService();
+            _sessionService = new SimpleSessionService(database);
         }
 
         public void SetDefaultUser(ISession session)
@@ -22,6 +22,11 @@
         public bool IsAuthenticatedAsClient(ISession session)
         {
             return _sessionService.IsAuthenticatedAsClient(session);
+        }
+
+        public int GetClientIdIfAuthenticated(ISession session)
+        {
+            return _sessionService.GetClientIdIfAuthenticated(session);
         }
     }
 }
