@@ -8,7 +8,10 @@ builder.Services.AddMvc();
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IDatabaseAdapter>(ServicesFactory.getInstance().GetDatabaseService());
 builder.Services.AddSingleton<IAuthentificationAdapter>(ServicesFactory.getInstance().GetAuthService());
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages()
+    .AddRazorRuntimeCompilation();
 
 builder.Services.AddDistributedMemoryCache();
 

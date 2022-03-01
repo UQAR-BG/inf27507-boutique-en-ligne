@@ -83,6 +83,40 @@ namespace INF27507_Boutique_En_Ligne.Services
             }
         }
 
+        public void UpdateItem(int clientId, int productId, int quantity)
+        {
+            Cart cart = GetActiveCart(clientId);
+            Product product = GetProductForValidation(productId);
+
+            if (product != null && cart != null)
+            {
+                CartItem item = GetCartItem(clientId, productId);
+
+                if (item != null)
+                {
+                    item.Quantity = quantity;
+                    _dbContext.SaveChanges();
+                }
+            }
+        }
+
+        public void DeleteItem(int clientId, int productId)
+        {
+            Cart cart = GetActiveCart(clientId);
+            Product product = GetProductForValidation(productId);
+
+            if (product != null && cart != null)
+            {
+                CartItem item = GetCartItem(clientId, productId);
+
+                if (item != null)
+                {
+                    _dbContext.CartItems.Remove(item);
+                    _dbContext.SaveChanges();
+                }
+            }
+        }
+
         public List<Product> GetAllProducts()
         {
             return _dbContext.Products

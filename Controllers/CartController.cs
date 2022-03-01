@@ -52,5 +52,35 @@ namespace INF27507_Boutique_En_Ligne.Controllers
 
             return RedirectToAction("CartPage");
         }
+
+        [HttpPost]
+        public IActionResult Update(int id, int itemQuantity)
+        {
+            if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
+                return RedirectToAction("Index", "Home");
+
+            Client client = _database.GetClient((int)HttpContext.Session.GetInt32("UserId"));
+            if (client == null)
+                return RedirectToAction("Index", "Home");
+
+            _database.UpdateItem(client.Id, id, itemQuantity);
+
+            return RedirectToAction("CartPage");
+        }
+
+        [HttpPost]
+        public IActionResult Remove(int id)
+        {
+            if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
+                return RedirectToAction("Index", "Home");
+
+            Client client = _database.GetClient((int)HttpContext.Session.GetInt32("UserId"));
+            if (client == null)
+                return RedirectToAction("Index", "Home");
+
+            _database.RemoveItem(client.Id, id);
+
+            return RedirectToAction("CartPage");
+        }
     }
 }

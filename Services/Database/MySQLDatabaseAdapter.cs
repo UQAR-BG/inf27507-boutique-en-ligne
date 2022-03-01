@@ -46,6 +46,16 @@ namespace INF27507_Boutique_En_Ligne.Services
             service.AddItem(clientId, productId, quantity);
         }
 
+        public void UpdateItem(int clientId, int productId, int quantity)
+        {
+            service.UpdateItem(clientId, productId, quantity);
+        }
+
+        public void RemoveItem(int clientId, int productId)
+        {
+            service.DeleteItem(clientId, productId);
+        }
+
         public List<Product> GetProducts()
         {
             return service.GetAllProducts();
