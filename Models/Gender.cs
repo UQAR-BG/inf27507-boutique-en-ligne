@@ -1,8 +1,7 @@
 ﻿namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class Gender
+    public class Gender : IModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

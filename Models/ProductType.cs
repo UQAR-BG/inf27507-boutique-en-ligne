@@ -1,8 +1,7 @@
 ﻿namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class ProductType
+    public class ProductType : IModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int SubCategoryId { get; set; }
         public SubCategory SubCategory { get; set; }

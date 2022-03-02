@@ -2,9 +2,8 @@
 
 namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class Order
+    public class Order : IModel
     {
-        public int Id { get; set; }
         [Required]
         public int CartId { get; set; }
         public Cart Cart { get; set; }

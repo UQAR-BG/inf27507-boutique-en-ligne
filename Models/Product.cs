@@ -2,9 +2,8 @@
 
 namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class Product
+    public class Product : IModel
     {
-        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]

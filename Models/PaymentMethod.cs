@@ -1,8 +1,7 @@
 ﻿namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class PaymentMethod
+    public class PaymentMethod : IModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

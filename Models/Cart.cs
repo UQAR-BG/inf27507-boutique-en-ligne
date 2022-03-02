@@ -1,8 +1,7 @@
 ﻿namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class Cart
+    public class Cart : IModel
     {
-        public int Id { get; set; }
         public int ClientId { get; set; }
         public Client Client { get; set; }
         public ICollection<CartItem> Items { get; set; }

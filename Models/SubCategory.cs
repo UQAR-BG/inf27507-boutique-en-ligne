@@ -1,8 +1,7 @@
 ﻿namespace INF27507_Boutique_En_Ligne.Models
 {
-    public class SubCategory
+    public class SubCategory : IModel
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }

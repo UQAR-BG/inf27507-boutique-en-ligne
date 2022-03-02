@@ -7,6 +7,11 @@ namespace INF27507_Boutique_En_Ligne.Services
     {
         private readonly BoutiqueDbContext _dbContext;
 
+        public BoutiqueDbContext GetContext()
+        {
+            return _dbContext;
+        }
+
         public BoutiqueMySQLService()
         {
             _dbContext = new BoutiqueDbContext();
@@ -62,59 +67,50 @@ namespace INF27507_Boutique_En_Ligne.Services
 
         public void AddItem(int clientId, int productId, int quantity)
         {
-            Cart cart = GetActiveCart(clientId);
-            Product product = GetProductForValidation(productId);
-
-            if (product != null && cart != null)
+            IModelHandler modelHandler = new AddCartItemHandler();
+            modelHandler.ExecuteOperation(new ModelWrapper()
             {
-                CartItem item = GetCartItem(clientId, productId);
+                ClientId = clientId,
+                ProductId = productId,
+                Quantity = quantity
+            });
+        }
 
-                if (item == null)
-                {
-                    item = new CartItem() { CartId = cart.Id, ProductId = product.Id, Quantity = quantity };
-                    _dbContext.CartItems.Add(item);
-                }
-                else
-                {
-                    item.Quantity += quantity;
-                }
-
-                _dbContext.SaveChanges(true);
-            }
+        public void AddItem(CartItem item)
+        {
+            _dbContext.CartItems.Add(item);
+            _dbContext.SaveChanges(true);
         }
 
         public void UpdateItem(int clientId, int productId, int quantity)
         {
-            Cart cart = GetActiveCart(clientId);
-            Product product = GetProductForValidation(productId);
+            IModelHandler modelHandler = new UpdateCartItemHandler();
+            modelHandler.ExecuteOperation(new ModelWrapper() {
+                ClientId = clientId,
+                ProductId = productId,
+                Quantity = quantity
+            });
+        }
 
-            if (product != null && cart != null)
-            {
-                CartItem item = GetCartItem(clientId, productId);
-
-                if (item != null)
-                {
-                    item.Quantity = quantity;
-                    _dbContext.SaveChanges();
-                }
-            }
+        public void UpdateItem(CartItem item, int quantity)
+        {
+            item.Quantity = quantity;
+            _dbContext.SaveChanges();
         }
 
         public void DeleteItem(int clientId, int productId)
         {
-            Cart cart = GetActiveCart(clientId);
-            Product product = GetProductForValidation(productId);
+            IModelHandler modelHandler = new RemoveCartItemHandler();
+            modelHandler.ExecuteOperation(new ModelWrapper() {
+                ClientId = clientId,
+                ProductId = productId
+            });
+        }
 
-            if (product != null && cart != null)
-            {
-                CartItem item = GetCartItem(clientId, productId);
-
-                if (item != null)
-                {
-                    _dbContext.CartItems.Remove(item);
-                    _dbContext.SaveChanges();
-                }
-            }
+        public void DeleteItem(CartItem item)
+        {
+            _dbContext.CartItems.Remove(item);
+            _dbContext.SaveChanges();
         }
 
         public List<Product> GetAllProducts()
@@ -138,7 +134,7 @@ namespace INF27507_Boutique_En_Ligne.Services
                 .SingleOrDefault(p => p.Id == id);
         }
 
-        private Product GetProductForValidation(int id)
+        public Product GetProductForValidation(int id)
         {
             return _dbContext.Products.Find(id);
         }
