@@ -24,11 +24,26 @@ namespace INF27507_Boutique_En_Ligne.Services
                 .FirstOrDefault(c => c.Id == id);
         }
 
+        public void UpdateClientBalance(Client client, double amountToPay)
+        {
+            client.Balance -= amountToPay;
+            _dbContext.SaveChanges();
+        }
+
         public Cart GetActiveCart(int clientId)
         {
             return (from carts in _dbContext.Cart
                    where carts.ClientId == clientId && carts.Active
                    select carts).SingleOrDefault();
+        }
+
+        public double GetCartTotal(int cartId)
+        {
+            return (from carts in _dbContext.Cart
+                    join item in _dbContext.CartItems on carts.Id equals item.CartId
+                    join product in _dbContext.Products on item.ProductId equals product.Id
+                    where carts.Id == cartId
+                    select item).Sum(i => i.Product.Price * i.Quantity);
         }
 
         public Cart CreateActiveCart(int clientId)
@@ -137,6 +152,32 @@ namespace INF27507_Boutique_En_Ligne.Services
         public Product GetProductForValidation(int id)
         {
             return _dbContext.Products.Find(id);
+        }
+
+        public List<PaymentMethod> GetPaymentMethods()
+        {
+            return _dbContext.PaymentMethods.ToList();
+        }
+
+        public void CreateOrder(int clientId, PaymentMethod method)
+        {
+            Cart activeCart = GetActiveCart(clientId);
+
+            Order order = new Order() { CreationDate = DateTime.Now, CartId = activeCart.Id, PaymentMethodId = method.Id };
+            _dbContext.Orders.Add(order);
+
+            SaveActiveCart(activeCart);
+
+            _dbContext.SaveChanges(true);
+        }
+
+        private void SaveActiveCart(Cart activeCart)
+        {
+            List<CartItem> items = GetCartItems(activeCart.Id);
+            foreach (CartItem item in items)
+                item.SalePrice = item.Product.Price;
+
+            activeCart.Active = false;
         }
     }
 }

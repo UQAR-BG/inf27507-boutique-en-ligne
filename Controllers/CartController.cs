@@ -23,10 +23,14 @@ namespace INF27507_Boutique_En_Ligne.Controllers
                 return RedirectToAction("Index", "Home");
 
             Cart activeCart = _database.GetActiveCart(clientId);
-            List<CartItem> cartItems = _database.GetCartItems(activeCart.Id);
+            if (activeCart == null)
+                return RedirectToAction("CartEmpty");
 
+            List<CartItem> cartItems = _database.GetCartItems(activeCart.Id);
             if (cartItems.Count == 0)
                 return RedirectToAction("CartEmpty");
+
+            ViewBag.CartTotal = _database.GetCartTotal(activeCart.Id);
 
             return View(cartItems);
         }

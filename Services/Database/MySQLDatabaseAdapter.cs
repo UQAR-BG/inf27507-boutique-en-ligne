@@ -22,9 +22,19 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetClient(Id);
         }
 
+        public void UpdateClientBalance(Client client, double amountToPay)
+        {
+            service.UpdateClientBalance(client, amountToPay);
+        }
+
         public Cart GetActiveCart(int clientId)
         {
             return service.GetActiveCart(clientId);
+        }
+
+        public double GetCartTotal(int cartId)
+        {
+            return service.GetCartTotal(cartId);
         }
 
         public Cart CreateActiveCart(int clientId)
@@ -90,6 +100,16 @@ namespace INF27507_Boutique_En_Ligne.Services
         public Product GetProductForValidation(int id)
         {
             return service.GetProductForValidation(id);
+        }
+
+        public List<PaymentMethod> GetPaymentMethods()
+        {
+            return service.GetPaymentMethods();
+        }
+
+        public void CreateOrder(int clientId, PaymentMethod method)
+        {
+            service.CreateOrder(clientId, method);
         }
     }
 }

@@ -1,0 +1,28 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@model PaymentMethod
+
+<h1 class="display-4">Checkout</h1>
+
+<div class="row mt-4 mb-2">
+    <div class="col">
+        <form asp-controller="Payment" asp-action="CompleteOrder" method="post">
+            @{
+                foreach(PaymentMethod method in @ViewBag.Methods)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" asp-for="Id" value="@method.Id" checked="@{ @method.Id == 1 ? true : false; }" />
+                        <label class="form-check-label">
+                            @method.Name
+                        </label>
+                    </div>
+                }
+            }
+            <button type="submit" class="btn btn-primary mt-4">Complete order</button>
+        </form>
+    </div>
+</div>

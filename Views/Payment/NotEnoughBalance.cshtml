@@ -1,0 +1,16 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Balance not enough";
+}
+
+<h1 class="display-4">A problem was encountered</h1>
+
+<div class="row mt-4 mb-4">
+    <div class="col">
+        <h4>Your account balance was not sufficient to complete your order. Please add credits to your account.</h4>
+    </div>
+</div>
+
+<div class="row mt-2 mb-2">
+    <a class="btn btn-link" asp-controller="Home" asp-action="Index">Return to Home Page</a>
+</div>
