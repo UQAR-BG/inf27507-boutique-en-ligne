@@ -1,0 +1,42 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Order Page";
+}
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@model Order
+
+<h1 class="display-4 mt-4 mb-4">Order summary</h1>
+
+<div class="row mt-2 mb-2">
+    <div class="col">
+        <div class="card px-5">
+            <div class="card-body">
+                @{
+                    double orderTotal = 0.00;
+
+                    foreach (CartItem item in @Model.Cart.Items)
+                    {
+                        orderTotal += (item.SalePrice * item.Quantity);
+
+                        <partial name="_OrderItem" model=item />
+                    }
+                }
+                <hr />
+
+                <div class="row mt-2 mb-2">
+                    <div class="text-center text-sm-end">
+                        <strong>Total:</strong> @string.Format("{0:C}", orderTotal)
+                    </div>
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="text-center text-sm-end">
+                        <strong>Payment method:</strong> @Model.PaymentMethod.Name
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a asp-controller="Home" asp-action="Index" class="link-primary">Return to store</a>

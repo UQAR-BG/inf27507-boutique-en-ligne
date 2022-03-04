@@ -23,19 +23,31 @@
                 </form>
                 <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                     @{
-                        string? Username = HttpContextAccessor.HttpContext.Session.GetString("Username");
-                        if (Username != null)
+                        string? username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+                        string? userType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
+                        if (username != null)
                         {
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">
-                                    <i class="fa fa-circle-user"></i> @Username
+                            <li class="nav-item dropdown active">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdownMenu" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-circle-user"></i> @username
                                 </a>
+                                <div class="dropdown-menu" aria-labelledby="userDropdownMenu">
+                                    <a 
+                                        class="dropdown-item" 
+                                        asp-controller="Order" 
+                                        asp-action="@(userType.Equals(UserType.Client.ToString()) ? "ClientOrdersList" : "SellerOrdersList")">
+                                            <i class="fas fa-file-invoice"></i> Order History
+                                    </a>
+                                </div>
                             </li>
-                            <li class="nav-item active">
-                                <a asp-controller="Cart" asp-action="CartPage" class="nav-link">
-                                    <i class="fa fa-shopping-cart"></i> Cart
-                                </a>
-                            </li>
+                            if (userType.Equals(UserType.Client.ToString()))
+                            {
+                                <li class="nav-item active">
+                                    <a asp-controller="Cart" asp-action="CartPage" class="nav-link">
+                                        <i class="fa fa-shopping-cart"></i> Cart
+                                    </a>
+                                </li>
+                            }
                         }
                     }
                 </ul>

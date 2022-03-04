@@ -42,9 +42,9 @@ namespace INF27507_Boutique_En_Ligne.Controllers
                 return RedirectToAction("NotEnoughBalance");
 
             _database.UpdateClientBalance(client, cartTotal);
-            _database.CreateOrder(client.Id, method);
+            int orderId = _database.CreateOrder(client.Id, method);
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("OrderPage", "Order", orderId);
         }
 
         [HttpGet]

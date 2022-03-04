@@ -22,6 +22,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetClient(Id);
         }
 
+        public Seller GetSeller(int id)
+        {
+            return service.GetSeller(id);
+        }
+
         public void UpdateClientBalance(Client client, double amountToPay)
         {
             service.UpdateClientBalance(client, amountToPay);
@@ -107,9 +112,24 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetPaymentMethods();
         }
 
-        public void CreateOrder(int clientId, PaymentMethod method)
+        public Order GetOrder(int id)
         {
-            service.CreateOrder(clientId, method);
+            return service.GetOrder(id);
+        }
+
+        public List<Order> GetOrders(Client client)
+        {
+            return service.GetOrders(client);
+        }
+
+        public List<Order> GetOrders(Seller seller)
+        {
+            return service.GetOrders(seller);
+        }
+
+        public int CreateOrder(int clientId, PaymentMethod method)
+        {
+            return service.CreateOrder(clientId, method);
         }
     }
 }

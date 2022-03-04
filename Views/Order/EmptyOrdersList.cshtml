@@ -1,0 +1,14 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Order Page";
+}
+
+<h1 class="display-4">List of previous orders</h1>
+
+<div class="row mt-2 mb-2">
+    <div class="col">
+        <h4>There are no orders linked to this account.</h4>
+    </div>
+</div>
+
+<a asp-controller="Home" asp-action="Index" class="link-primary">Return to store</a>

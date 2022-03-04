@@ -1,0 +1,19 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@model CartItem
+
+<div class="row mt-2 mb-4">
+    <div class="col-sm-6">
+        <span><strong>Title:</strong> @Model.Product.Title</span>
+    </div>
+    <div class="col-sm-2">
+        <span><strong>Price:</strong> @string.Format("{0:C}", @Model.SalePrice)</span>
+    </div>
+    <div class="col-sm-2">
+        <span><strong>Quantity:</strong> @Model.Quantity</span>
+    </div>
+    <div class="col-sm-2">
+        <span><strong>Total:</strong> @string.Format("{0:C}", (@Model.SalePrice * @Model.Quantity))</span>
+    </div>
+</div>

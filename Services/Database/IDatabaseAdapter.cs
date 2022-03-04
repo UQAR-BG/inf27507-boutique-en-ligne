@@ -7,6 +7,7 @@ namespace INF27507_Boutique_En_Ligne.Services
     {
         DbContext GetContext();
         Client GetClient(int Id);
+        Seller GetSeller(int id);
         void UpdateClientBalance(Client client, double amountToPay);
         List<Product> GetProducts();
         Product GetProduct(int id);
@@ -24,6 +25,9 @@ namespace INF27507_Boutique_En_Ligne.Services
         void RemoveItem(int clientId, int productId);
         void RemoveItem(CartItem item);
         List<PaymentMethod> GetPaymentMethods();
-        void CreateOrder(int clientId, PaymentMethod method);
+        Order GetOrder(int id);
+        List<Order> GetOrders(Client client);
+        List<Order> GetOrders(Seller seller);
+        int CreateOrder(int clientId, PaymentMethod method);
     }
 }

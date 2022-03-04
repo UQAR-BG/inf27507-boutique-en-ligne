@@ -5,6 +5,8 @@
         void SetDefaultUser(ISession session);
         bool IsAuthenticated(ISession session);
         bool IsAuthenticatedAsClient(ISession session);
+        bool IsAuthenticatedAsSeller(ISession session);
         int GetClientIdIfAuthenticated(ISession session);
+        int GetSellerIdIfAuthenticated(ISession session);
     }
 }

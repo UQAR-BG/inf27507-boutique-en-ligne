@@ -24,9 +24,19 @@
             return _sessionService.IsAuthenticatedAsClient(session);
         }
 
+        public bool IsAuthenticatedAsSeller(ISession session)
+        {
+            return _sessionService.IsAuthenticatedAsSeller(session);
+        }
+
         public int GetClientIdIfAuthenticated(ISession session)
         {
             return _sessionService.GetClientIdIfAuthenticated(session);
+        }
+
+        public int GetSellerIdIfAuthenticated(ISession session)
+        {
+            return _sessionService.GetSellerIdIfAuthenticated(session);
         }
     }
 }

@@ -24,6 +24,13 @@ namespace INF27507_Boutique_En_Ligne.Services
                 .FirstOrDefault(c => c.Id == id);
         }
 
+        public Seller GetSeller(int id)
+        {
+            return _dbContext.Sellers
+                .Include(c => c.Products)
+                .FirstOrDefault(c => c.Id == id);
+        }
+
         public void UpdateClientBalance(Client client, double amountToPay)
         {
             client.Balance -= amountToPay;
@@ -159,7 +166,43 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.PaymentMethods.ToList();
         }
 
-        public void CreateOrder(int clientId, PaymentMethod method)
+        public Order GetOrder(int id)
+        {
+            return _dbContext.Orders
+                .Include(o => o.Cart)
+                    .ThenInclude(o => o.Client)
+                .Include(o => o.Cart)
+                    .ThenInclude(c => c.Items)
+                        .ThenInclude(i => i.Product)
+                            .ThenInclude(p => p.Seller)
+                .Include(o => o.PaymentMethod)
+                .Where(o => o.Id == id)
+                .SingleOrDefault();
+        }
+
+        public List<Order> GetOrders(Client client)
+        {
+            return _dbContext.Orders
+                .Include(o => o.Cart)
+                    .ThenInclude(c => c.Items)
+                .Include(o => o.PaymentMethod)
+                .Where(o => o.Cart.ClientId == client.Id && !o.Cart.Active)
+                .ToList();
+        }
+
+        public List<Order> GetOrders(Seller seller)
+        {
+            return (from orders in _dbContext.Orders
+                    join methods in _dbContext.PaymentMethods on orders.PaymentMethodId equals methods.Id
+                    join carts in _dbContext.Cart on orders.CartId equals carts.Id
+                    join items in _dbContext.CartItems on carts.Id equals items.CartId
+                    join products in _dbContext.Products on items.ProductId equals products.Id
+                    join sellers in _dbContext.Sellers on products.SellerId equals sellers.Id
+                    where sellers.Id == seller.Id && !carts.Active
+                    select orders).ToList();
+        }
+
+        public int CreateOrder(int clientId, PaymentMethod method)
         {
             Cart activeCart = GetActiveCart(clientId);
 
@@ -169,6 +212,7 @@ namespace INF27507_Boutique_En_Ligne.Services
             SaveActiveCart(activeCart);
 
             _dbContext.SaveChanges(true);
+            return order.Id;
         }
 
         private void SaveActiveCart(Cart activeCart)

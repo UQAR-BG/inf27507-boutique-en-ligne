@@ -1,0 +1,45 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Orders History";
+}
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@model List<Order>
+
+<h1 class="display-4 mt-4">List of previous orders</h1>
+
+<div class="row mt-2 mb-2">
+    <div class="col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Payment method</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (Order order in @Model)
+                    {
+                        <tr>
+                            <td>@order.CreationDate</td>
+                            <td>@order.PaymentMethod.Name</td>
+                            <td>
+                                <a 
+                                    class="btn btn-primary" 
+                                    asp-controller="Order" 
+                                    asp-action="OrderPage" 
+                                    asp-route-orderId="@order.Id">
+                                        Show
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a asp-controller="Home" asp-action="Index" class="link-primary">Return to store</a>

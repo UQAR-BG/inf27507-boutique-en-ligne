@@ -15,7 +15,7 @@
                 foreach(PaymentMethod method in @ViewBag.Methods)
                 {
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" asp-for="Id" value="@method.Id" checked="@{ @method.Id == 1 ? true : false; }" />
+                        <input class="form-check-input" type="radio" asp-for="Id" value="@method.Id" checked="@{ @(method.Id == 1 ? true : false) }" />
                         <label class="form-check-label">
                             @method.Name
                         </label>

@@ -33,7 +33,7 @@ namespace INF27507_Boutique_En_Ligne.Services
 
         private void Setup() 
         {
-            _modelWrapper.Model = _database.GetCartItem(_modelWrapper.ClientId, _modelWrapper.ProductId);
+            _modelWrapper.Model = _database.GetCartItem(_modelWrapper.CartId, _modelWrapper.ProductId);
         }
     }
 }
