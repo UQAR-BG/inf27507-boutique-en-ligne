@@ -187,6 +187,7 @@ namespace INF27507_Boutique_En_Ligne.Services
                     .ThenInclude(c => c.Items)
                 .Include(o => o.PaymentMethod)
                 .Where(o => o.Cart.ClientId == client.Id && !o.Cart.Active)
+                .OrderByDescending(o => o.CreationDate)
                 .ToList();
         }
 

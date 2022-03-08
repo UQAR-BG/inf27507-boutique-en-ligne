@@ -44,7 +44,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
             _database.UpdateClientBalance(client, cartTotal);
             int orderId = _database.CreateOrder(client.Id, method);
 
-            return RedirectToAction("OrderPage", "Order", orderId);
+            return RedirectToAction("OrderPage", "Order", new { orderId = orderId });
         }
 
         [HttpGet]
