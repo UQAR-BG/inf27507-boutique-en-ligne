@@ -1,4 +1,5 @@
 ﻿using INF27507_Boutique_En_Ligne.Models;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 namespace INF27507_Boutique_En_Ligne.Services
@@ -226,6 +227,16 @@ namespace INF27507_Boutique_En_Ligne.Services
 
             _dbContext.SaveChanges(true);
             return order.Id;
+        }
+
+        public List<Gender> GetGenders()
+        {
+            return _dbContext.Genders.ToList();
+        }
+
+        public List<Category> GetCategorys()
+        {
+            return _dbContext.Categories.ToList();
         }
 
         private void SaveActiveCart(Cart activeCart)

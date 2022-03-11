@@ -11,12 +11,21 @@
 </div>
 
 <div class="row mt-2 mb-2">
-    <div class="col">
+    <div class="col-3">
+        <partial name="_FilterForm" model="@ViewBag.FilterForm"></partial>
+    </div>
+    <div class="col-9">
         @{
-            foreach(Product product in @Model)
+            foreach (Product product in @Model)
             {
-                <partial name="_ProductCard" model=product />
+                <partial name="_ProductCard" model=product></partial>
+            }
+            if (Model.Count == 0)
+            {
+                <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+                    <h2>Aucun produit ne correspond à votre recherche !</h2>
+                </div>
             }
         }
-    </div>
+        </div>
 </div>

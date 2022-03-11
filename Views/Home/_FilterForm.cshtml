@@ -1,0 +1,47 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model INF27507_Boutique_En_Ligne.Models.FormData.Filter
+
+@{int? rangeValue = Model.Price==0?Model.Max:Model.Price;}
+
+<div class="card" style="border-radius: 15px;">
+    <div class="card-body p-5">
+        <h2 class="text-uppercase text-center mb-5">Filtre</h2>
+
+        <form asp-action="Index" id="filter-form">
+            <div class="form-outline mb-4">
+                <label class="form-label" asp-for="Price">Prix</label>
+                <input type="range" min="@Model.Min" max="@Model.Max" value="@rangeValue" asp-for="Price" class="form-range"/>
+                <span class="text-danger" asp-validation-for="Price"></span>
+            </div>
+
+            <div class="form-outline mb-4 row">
+                <label class="form-label" asp-for="CategoryID">Categories</label>
+                <div>
+                    <select asp-for="CategoryID" class="form-select" aria-label="Default select example">
+                        <option value="0">Tous</option>
+                        @foreach (Category cat in @ViewBag.cat)
+                        {
+                            <option value="@cat.Id">@cat.Name</option>
+                        }
+                    </select>
+                </div>
+                <span class="text-danger" asp-validation-for="CategoryID"></span>
+            </div>
+
+            @foreach(Gender gender in @Model.Genders.Keys)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="true" asp-for="GendersBools[gender.Id]">
+                    <label class="form-check-label" asp-for="GendersBools[gender.Id]">
+                        @gender.Name
+                    </label>
+                </div>
+            }
+
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-success btn-lg">Filtrer</button>
+            </div>
+        </form>
+
+    </div>
+</div>

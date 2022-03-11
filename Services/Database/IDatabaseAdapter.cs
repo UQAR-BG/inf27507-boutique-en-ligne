@@ -31,5 +31,7 @@ namespace INF27507_Boutique_En_Ligne.Services
         List<Order> GetOrders(Client client);
         List<Order> GetOrders(Seller seller);
         int CreateOrder(int clientId, PaymentMethod method);
+        List<Gender> GetGenders();
+        List<Category> GetCategorys();
     }
 }

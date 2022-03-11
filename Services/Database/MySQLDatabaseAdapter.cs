@@ -141,5 +141,15 @@ namespace INF27507_Boutique_En_Ligne.Services
         {
             return service.CreateOrder(clientId, method);
         }
+
+        public List<Gender> GetGenders()
+        {
+            return service.GetGenders();
+        }
+
+        public List<Category> GetCategorys()
+        {
+            return service.GetCategorys();
+        }
     }
 }

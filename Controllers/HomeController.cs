@@ -2,6 +2,7 @@
 using INF27507_Boutique_En_Ligne.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using INF27507_Boutique_En_Ligne.Models.FormData;
 
 namespace INF27507_Boutique_En_Ligne.Controllers
 {
@@ -18,12 +19,26 @@ namespace INF27507_Boutique_En_Ligne.Controllers
             _authService = authService;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(Filter? filter, string search)
         {
             _authService.SetDefaultUser(HttpContext.Session);
 
             List<Product> products = _database.GetProducts();
-            return View(products);
+            ViewData.Add("Search", search);
+            ViewBag.cat = _database.GetCategorys();
+            ViewBag.FilterForm = new Filter()
+                {
+                    CategoryID = 0,
+                    Genders = _database.GetGenders().ToDictionary(gender => gender, m => true),
+                    GendersBools = _database.GetGenders().ToDictionary(gender => gender.Id, m => true),
+                    Min = (int)Math.Round(products.Min(p => p.Price), 0, MidpointRounding.ToPositiveInfinity),
+                    Max = (int)Math.Round(products.Max(p => p.Price), 0, MidpointRounding.ToPositiveInfinity),
+                    Price = filter?.Price ?? 0
+                };
+            return View(products.Where(p => (filter is not {CategoryID: { }} || (p.Category.Id == filter?.CategoryID || filter?.CategoryID == 0) 
+                && ((filter.GendersBools == null)|| filter.GendersBools.GetValueOrDefault(p.GenderId, false)) 
+                && (filter.Price == 0 || p.Price <= filter.Price))
+                && search == null || (search != null && p.Title.Contains(search))).ToList());
         }
 
         public IActionResult Privacy()
