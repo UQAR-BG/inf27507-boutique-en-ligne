@@ -20,7 +20,13 @@ namespace INF27507_Boutique_En_Ligne.Services
                 session.SetString("UserType", UserType.Client.ToString());
             }
         }
-
+        
+        public void SetUser(User user, ISession session)
+        {
+            session.SetInt32("UserId", user.Id);
+            session.SetString("Username", user.Username);
+            session.SetString("UserType", (user.GetType() == typeof(Client)? UserType.Client : UserType.Seller).ToString());
+        }
         public bool IsAuthenticated(ISession session)
         {
             return session.GetInt32("UserId") != null && session.GetString("UserType") != null;

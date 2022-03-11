@@ -23,6 +23,18 @@ namespace INF27507_Boutique_En_Ligne.Services
                 .Include(c => c.Carts)
                 .FirstOrDefault(c => c.Id == id);
         }
+        
+        public List<Client> GetClients()
+        {
+            return _dbContext.Clients
+                .Include(c => c.Carts).ToList();
+        }
+        
+        public void AddClient(Client client)
+        {
+            _dbContext.Clients.Add(client);
+            _dbContext.SaveChanges(true);
+        }
 
         public Seller GetSeller(int id)
         {

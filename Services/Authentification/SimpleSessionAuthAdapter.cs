@@ -1,4 +1,6 @@
-﻿namespace INF27507_Boutique_En_Ligne.Services
+﻿using INF27507_Boutique_En_Ligne.Models;
+
+namespace INF27507_Boutique_En_Ligne.Services
 {
     public class SimpleSessionAuthAdapter : IAuthentificationAdapter
     {
@@ -12,6 +14,11 @@
         public void SetDefaultUser(ISession session)
         {
             _sessionService.SetDefaultUser(session);
+        }
+
+        public void SetUser(User user, ISession session)
+        {
+            _sessionService.SetUser(user, session);
         }
 
         public bool IsAuthenticated(ISession session)

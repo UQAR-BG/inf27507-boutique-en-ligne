@@ -36,7 +36,13 @@
                                         class="dropdown-item" 
                                         asp-controller="Order" 
                                         asp-action="@(userType.Equals(UserType.Client.ToString()) ? "ClientOrdersList" : "SellerOrdersList")">
-                                            <i class="fas fa-file-invoice"></i> Order History
+                                        <i class="fas fa-file-invoice"></i> Order History
+                                    </a>
+                                    <!-- TODO check for seller-->
+                                    <a class="dropdown-item"
+                                       asp-controller="Client"
+                                       asp-action="Connection">
+                                        <i class="fas fa-passport"></i> Change account
                                     </a>
                                 </div>
                             </li>
@@ -48,6 +54,12 @@
                                     </a>
                                 </li>
                             }
+                        }
+                        else
+                        {
+                            <a asp-controller="Client" asp-action="Connection" class="d-grid gap-2 me-2 ms-2 btn btn-warning">
+                                Se connecter ?
+                            </a>
                         }
                     }
                 </ul>

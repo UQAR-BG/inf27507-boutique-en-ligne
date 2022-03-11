@@ -22,6 +22,16 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetClient(Id);
         }
 
+        public List<Client> GetClients()
+        {
+            return service.GetClients();
+        }
+
+        public void AddClient(Client client)
+        {
+            service.AddClient(client);
+        }
+
         public Seller GetSeller(int id)
         {
             return service.GetSeller(id);
