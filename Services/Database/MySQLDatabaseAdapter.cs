@@ -22,6 +22,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetClient(Id);
         }
 
+        public void UpdateClientInfo(Client client)
+        {
+            service.UpdateClientInfo(client);
+        }
+
         public List<Client> GetClients()
         {
             return service.GetClients();
