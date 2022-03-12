@@ -1,4 +1,5 @@
-﻿using INF27507_Boutique_En_Ligne.Models;
+﻿using System.Globalization;
+using INF27507_Boutique_En_Ligne.Models;
 using INF27507_Boutique_En_Ligne.Models.FormData;
 using INF27507_Boutique_En_Ligne.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -83,5 +84,19 @@ public class ClientController : Controller
             ViewData.Add("valid", false);
         }
         return View(ci);
+    }
+
+    public IActionResult Stats()
+    {
+        if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
+            return RedirectToAction("Connection");
+        Client client = _database.GetClient(_authService.GetClientIdIfAuthenticated(HttpContext.Session));
+        List<Order> orders = _database.GetOrders(client);
+        Dictionary<string, string> data = new Dictionary<string, string>
+        {
+            {"total", orders.Sum(o => o.Cart.Items.Sum(i=>i.Quantity*i.SalePrice)).ToString("F", CultureInfo.CreateSpecificCulture("fr-FR"))},
+            {"art", orders.Sum(o => o.Cart.Items.Sum(i => i.Quantity)).ToString("N0", CultureInfo.CreateSpecificCulture("fr-FR"))}
+        };
+        return View(data);
     }
 }
