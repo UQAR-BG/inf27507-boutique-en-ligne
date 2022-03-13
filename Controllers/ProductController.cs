@@ -24,6 +24,31 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         }
 
         [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Product = _database.GetProduct(id);
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ProductUpdate product)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewData.Add("valid", true);
+                ViewBag.Product = _database.UpdateProduct(product);
+            }
+            else
+            {
+                ViewData.Add("valid", false);
+                ViewBag.Product = _database.GetProduct(product.Id);
+            }
+
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult NotFound()
         {
             return View();

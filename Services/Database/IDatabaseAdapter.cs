@@ -18,6 +18,7 @@ namespace INF27507_Boutique_En_Ligne.Services
         List<Product> GetProducts();
         Product GetProduct(int id);
         Product GetProductForValidation(int id);
+        Product UpdateProduct(ProductUpdate update);
         Cart GetActiveCart(int clientId);
         double GetCartTotal(int cartId);
         Cart CreateActiveCart(int clientId);
