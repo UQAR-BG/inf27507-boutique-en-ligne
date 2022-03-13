@@ -1,0 +1,119 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Seller Page";
+}
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@Model.Seller
+
+<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+    <div class="container h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                <div class="card" style="border-radius: 15px;">
+                    <div class="card-body p-5">
+                        <div class="container">
+                            <form role="form">
+                                <div class="input-group mb-3">
+                                     <label for="test"  >titre</label>
+                                        <span><input name="test" id="test"type="text" placeholder="enter your title"/>
+                                         <label class="radio-inline">
+                                         <input type="radio" name="optradio">homme
+                                         </label>
+                                         <label class="radio-inline">
+                                         <input type="radio" name="optradio">femme
+                                         </label></span>
+                                 </div>
+                                 <div style="display:flex; flex-direction: row">
+                                         <label for="categorie">categorie:</label>
+                                          <span> <select class="form-control" id="text">
+                                           <option>text goes there</option>
+                                           <option>...</option>
+                                           <option>....</option>
+                                            </select>
+                                           </span>
+                                         <label for="text">prix unitaire</label>
+                                           <span><input type="number" placeholder="number" asp-for="Balance" class="form-control form-control-lg" />
+                                           </span>
+                                 </div>
+                                 <div style="display: flex;flex-direction: row">
+                                         <label for="test">image</label>
+                                         <span><input name="test" id="test" type="text" placeholder="enter your image" />
+                                         <button type="submit" class="btn btn-success btn-lg">Ajouter</button>
+                                         </span>
+                                 </div>
+                                 <div class="row mt-5 mb-5">
+                                   <div class="col-md-6">
+                                      <a href="@Model.ImageURL" target="_blank">
+                                      <img class="img-fluid" src="~/img/@Model.Image" alt="@Model.Title" />
+                                      </a>
+                                   </div>
+                                   </div>
+                                 <div class="container">
+                                   
+                                   <div class="col-md-15; d-grip gap-2 d-md-block">
+                                     <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                       <label for="titre">Titre:</label>
+                                       <input name="test" id="test" type="text" placeholder="enter your title" />
+                                     <div class="d-grip gap-2 d-md-block">
+                                        <span><button type="submit" class="btn btn-success btn-lg">sauvegarder</button></span>
+                                     </div>
+                                     </div>
+                                   </div>
+
+                                   <div style="display:flex; flex-direction: row; justify-content: center; align-items: center" >
+                                     <label for="text">prix unitaire</label>
+                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                       </span>
+                                  <div class="col-md-15; d-grip gap-2 d-md-block ">
+                                  <br><span><button type="submit" class="btn btn-success btn-lg">supprimer</button></span>
+                                  </div>
+                                  </div>
+                                  <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                      <label for="text">quantité disponible</label>
+                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                      </span>
+                                  </div>
+                                  </div>
+
+                                   <div class="row mt-5 mb-5">
+                                   <div class="col-md-6">
+                                      <a href="@Model.ImageURL" target="_blank">
+                                      <img class="img-fluid" src="~/img/@Model.Image" alt="@Model.Title" />
+                                      </a>
+                                   </div>
+                                   </div>
+                                 <div class="container">
+                                   
+                                   <div class="col-md-15; d-grip gap-2 d-md-block">
+                                     <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                       <label for="titre">Titre:</label>
+                                       <input name="test" id="test" type="text" placeholder="enter your title" />
+                                     <div class="d-grip gap-2 d-md-block">
+                                        <span><button type="submit" class="btn btn-success btn-lg">sauvegarder</button></span>
+                                     </div>
+                                     </div>
+                                   </div>
+
+                                   <div style="display:flex; flex-direction: row; justify-content: center; align-items: center" >
+                                     <label for="text">prix unitaire</label>
+                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                       </span>
+                                  <div class="col-md-15; d-grip gap-2 d-md-block ">
+                                  <br><span><button type="submit" class="btn btn-success btn-lg">supprimer</button></span>
+                                  </div>
+                                  </div>
+                                  <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+                                      <label for="text">quantité disponible</label>
+                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                      </span>
+                                  </div>
+                            </div>                                
+                    </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
