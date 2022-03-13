@@ -42,6 +42,16 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetSeller(id);
         }
 
+        public List<Seller> GetSellers()
+        {
+            return service.GetSellers();
+        }
+
+        public void AddSeller(Seller seller)
+        {
+            service.AddSeller(seller);
+        }
+
         public void UpdateClientBalance(Client client, double amountToPay)
         {
             service.UpdateClientBalance(client, amountToPay);

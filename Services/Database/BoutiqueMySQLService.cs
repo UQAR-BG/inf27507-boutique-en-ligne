@@ -44,6 +44,17 @@ namespace INF27507_Boutique_En_Ligne.Services
                 .FirstOrDefault(c => c.Id == id);
         }
 
+        public List<Seller> GetSellers()
+        {
+            return _dbContext.Sellers.ToList();
+        }
+
+        public void AddSeller(Seller seller)
+        {
+            _dbContext.Sellers.Add(seller);
+            _dbContext.SaveChanges(true);
+        }
+
         public void UpdateClientBalance(Client client, double amountToPay)
         {
             client.Balance -= amountToPay;

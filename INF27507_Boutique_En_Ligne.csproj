@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Services\Payment\" />
+    <Folder Include="Views\Seller\" />
     <Folder Include="wwwroot\lib\" />
     <Folder Include="wwwroot\img\" />
   </ItemGroup>

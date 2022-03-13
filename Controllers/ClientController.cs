@@ -12,7 +12,6 @@ public class ClientController : Controller
 {
     private readonly IDatabaseAdapter _database;
     private readonly IAuthentificationAdapter _authService;
-    
 
     public ClientController(IDatabaseAdapter database, IAuthentificationAdapter authService)
     {
@@ -94,7 +93,7 @@ public class ClientController : Controller
         List<Order> orders = _database.GetOrders(client);
         Dictionary<string, string> data = new Dictionary<string, string>
         {
-            {"total", orders.Sum(o => o.Cart.Items.Sum(i=>i.Quantity*i.SalePrice)).ToString("F", CultureInfo.CreateSpecificCulture("fr-FR"))},
+            {"total", string.Format("{0:C}", orders.Sum(o => o.Cart.Items.Sum(i=>i.Quantity*i.SalePrice)))},
             {"art", orders.Sum(o => o.Cart.Items.Sum(i => i.Quantity)).ToString("N0", CultureInfo.CreateSpecificCulture("fr-FR"))}
         };
         return View(data);

@@ -40,19 +40,21 @@
                                         asp-action="@(userType.Equals(UserType.Client.ToString()) ? "ClientOrdersList" : "SellerOrdersList")">
                                         <i class="fas fa-file-invoice"></i> Order History
                                     </a>
-                                    <!-- TODO check for seller-->
+                                    @{
+                                        string controller = userType.Equals(UserType.Client.ToString()) ? "Client" : "Seller";
+                                    }
                                     <a class="dropdown-item"
-                                       asp-controller="Client"
+                                       asp-controller="@controller"
                                        asp-action="Connection">
                                         <i class="fas fa-passport"></i> Change account
                                     </a>
                                     <a class="dropdown-item"
-                                       asp-controller="Client"
+                                       asp-controller="@controller"
                                        asp-action="Info">
                                         <i class="fas fa-info-circle"></i> Information
                                     </a>
                                     <a class="dropdown-item"
-                                       asp-controller="Client"
+                                       asp-controller="@controller"
                                        asp-action="Stats">
                                         <i class="fa-solid fa-chart-area"></i> Stats
                                     </a>
