@@ -305,5 +305,11 @@ namespace INF27507_Boutique_En_Ligne.Services
 
             _dbContext.CartItems.RemoveRange(itemsToPurge);
         }
+        
+        public void UpdateSellerInfo(Seller seller)
+        {
+            _dbContext.Sellers.Update(seller);
+            _dbContext.SaveChanges();
+        }
     }
 }

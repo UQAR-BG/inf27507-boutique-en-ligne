@@ -2,7 +2,7 @@
 
 namespace INF27507_Boutique_En_Ligne.Models.FormData;
 
-public class ClientInfo
+public class UserInfo
 {
     [Required, StringLength(32, MinimumLength = 2)]
     public string LastName { get; set; }

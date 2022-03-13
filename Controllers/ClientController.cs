@@ -57,7 +57,7 @@ public class ClientController : Controller
         if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
             return RedirectToAction("Connection");
         Client client = _database.GetClient(_authService.GetClientIdIfAuthenticated(HttpContext.Session));
-        return View(new ClientInfo()
+        return View(new UserInfo()
         {
             LastName = client.Lastname,
             Firstname = client.Firstname,
@@ -66,7 +66,7 @@ public class ClientController : Controller
     }
 
     [HttpPost]
-    public IActionResult Info(ClientInfo ci)
+    public IActionResult Info(UserInfo ci)
     {
         if (!_authService.IsAuthenticatedAsClient(HttpContext.Session))
             return RedirectToAction("Connection");
