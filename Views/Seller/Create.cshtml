@@ -1,0 +1,49 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewBag.Title = "Vendeur Nouveau profil";
+    Layout = "_Layout";
+}
+
+@model Seller
+
+<section class="vh-100 bg-image">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Enregistrement</h2>
+
+                            <form asp-action="Create">
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Lastname" class="form-control form-control-lg"/>
+                                    <label class="form-label" asp-for="Lastname">Nom</label>
+                                    <span class="text-danger" asp-validation-for="Lastname"></span>
+                                </div>
+                                
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Firstname" class="form-control form-control-lg"/>
+                                    <label class="form-label" asp-for="Firstname">Prénom</label>
+                                    <span class="text-danger" asp-validation-for="Firstname"></span>
+                                </div>
+                                
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Username" class="form-control form-control-lg"/>
+                                    <label class="form-label" asp-for="Username">Nom d'utilisateur</label>
+                                    <span class="text-danger" asp-validation-for="Username"></span>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success btn-lg">Création</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

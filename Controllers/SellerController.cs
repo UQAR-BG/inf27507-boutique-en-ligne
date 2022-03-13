@@ -18,7 +18,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
 
         public IActionResult Connection()
         {
-            ViewBag.Clients = _database.GetClients();
+            ViewBag.Sellers = _database.GetSellers();
 
             return View();
         }
@@ -41,7 +41,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Seller seller)
+        public IActionResult Create(Seller? seller)
         {
             if (seller == null)
                 return RedirectToAction("Create");
@@ -52,11 +52,19 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpGet]
         public IActionResult Info()
         {
-            return View();
+            if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
+                return RedirectToAction("Connection");
+            Seller seller = _database.GetSeller(_authService.GetSellerIdIfAuthenticated(HttpContext.Session));
+            return View(new UserInfo()
+            {
+                LastName = seller.Lastname,
+                Firstname = seller.Firstname,
+                Identifiant = seller.Username
+            });
         }
 
         [HttpPost]
-        public IActionResult Info(SellerInfo si)
+        public IActionResult Info(UserInfo si)
         {
             if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
                 return RedirectToAction("Connection");
@@ -66,7 +74,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
                 Seller seller = _database.GetSeller(_authService.GetSellerIdIfAuthenticated(HttpContext.Session));
                 seller.Firstname = si.Firstname;
                 seller.Lastname = si.LastName;
-                //_database.UpdateClientInfo(seller);
+                _database.UpdateSellerInfo(seller);
             }
             else
             {
@@ -78,7 +86,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpGet]
         public IActionResult Stats()
         {
-            return View();
+            return null;
         }
     }
 }

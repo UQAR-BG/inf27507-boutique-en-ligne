@@ -266,5 +266,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             _dbContext.Clients.Update(client);
             _dbContext.SaveChanges();
         }
+        
+        public void UpdateSellerInfo(Seller seller)
+        {
+            _dbContext.Sellers.Update(seller);
+            _dbContext.SaveChanges();
+        }
     }
 }
