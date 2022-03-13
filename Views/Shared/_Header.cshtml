@@ -46,6 +46,16 @@
                                        asp-action="Connection">
                                         <i class="fas fa-passport"></i> Change account
                                     </a>
+                                    <a class="dropdown-item"
+                                       asp-controller="Client"
+                                       asp-action="Info">
+                                        <i class="fas fa-info-circle"></i> Information
+                                    </a>
+                                    <a class="dropdown-item"
+                                       asp-controller="Client"
+                                       asp-action="Stats">
+                                        <i class="fa-solid fa-chart-area"></i> Stats
+                                    </a>
                                 </div>
                             </li>
                             if (userType.Equals(UserType.Client.ToString()))

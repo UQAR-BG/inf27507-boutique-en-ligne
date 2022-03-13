@@ -247,5 +247,11 @@ namespace INF27507_Boutique_En_Ligne.Services
 
             activeCart.Active = false;
         }
+
+        public void UpdateClientInfo(Client client)
+        {
+            _dbContext.Clients.Update(client);
+            _dbContext.SaveChanges();
+        }
     }
 }
