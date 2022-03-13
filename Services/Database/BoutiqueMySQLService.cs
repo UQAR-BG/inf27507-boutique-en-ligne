@@ -181,7 +181,9 @@ namespace INF27507_Boutique_En_Ligne.Services
 
         public Order GetOrder(int id)
         {
-            return _dbContext.Orders
+            BoutiqueDbContext db = new BoutiqueDbContext();
+
+            return db.Orders
                 .Include(o => o.Cart)
                     .ThenInclude(o => o.Client)
                 .Include(o => o.Cart)
