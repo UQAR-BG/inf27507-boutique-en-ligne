@@ -17,7 +17,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         public IActionResult ProductPage(int id)
         {
             Product product = _database.GetProduct(id);
-            if (product == null)
+            if (product == null || !product.Active)
                 return RedirectToAction("NotFound");
 
             return View(product);
@@ -46,6 +46,14 @@ namespace INF27507_Boutique_En_Ligne.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            _database.DeleteProduct(id);
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

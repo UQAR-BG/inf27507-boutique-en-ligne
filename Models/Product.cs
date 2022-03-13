@@ -8,10 +8,11 @@ namespace INF27507_Boutique_En_Ligne.Models
         public string Title { get; set; }
         [Required]
         public string Image { get; set; }
-        [Required]
         public string ImageURL { get; set; }
         [Required]
         public double Price { get; set; }
+        [Required]
+        public bool Active { get; set; }
         [Required]
         public int GenderId { get; set; }
         public Gender Gender { get; set; }

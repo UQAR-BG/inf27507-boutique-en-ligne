@@ -137,6 +137,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.UpdateProduct(update);
         }
 
+        public void DeleteProduct(int id)
+        {
+            service.DeleteProduct(id);
+        }
+
         public List<PaymentMethod> GetPaymentMethods()
         {
             return service.GetPaymentMethods();
