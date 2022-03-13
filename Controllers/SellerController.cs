@@ -18,7 +18,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
 
         public IActionResult Connection()
         {
-            ViewBag.Clients = _database.GetClients();
+            ViewBag.Sellers = _database.GetSellers();
 
             return View();
         }

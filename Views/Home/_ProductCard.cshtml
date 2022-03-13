@@ -35,6 +35,13 @@
                     </div>
                 }
             }
+            <div class="row mt-2 mb-2">
+                <div class="text-center text-sm-end">
+                    <form asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" method="get">
+                        <button type="submit" class="btn btn-success btn-over-streched-link">Edit Product</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <a 
             asp-controller="Product" 

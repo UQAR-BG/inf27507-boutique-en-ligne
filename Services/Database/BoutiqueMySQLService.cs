@@ -185,6 +185,21 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.Products.Find(id);
         }
 
+        public Product UpdateProduct(ProductUpdate update)
+        {
+            Product product = _dbContext.Products.Find(update.Id);
+
+            if (product != null && (!product.Title.Equals(update.Title) || product.Price != update.Price))
+            {
+                product.Title = update.Title;
+                product.Price = update.Price;
+
+                _dbContext.SaveChanges();
+            }
+
+            return product;
+        }
+
         public List<PaymentMethod> GetPaymentMethods()
         {
             return _dbContext.PaymentMethods.ToList();

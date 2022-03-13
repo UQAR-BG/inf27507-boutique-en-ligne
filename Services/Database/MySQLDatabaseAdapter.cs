@@ -132,6 +132,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetProductForValidation(id);
         }
 
+        public Product UpdateProduct(ProductUpdate update)
+        {
+            return service.UpdateProduct(update);
+        }
+
         public List<PaymentMethod> GetPaymentMethods()
         {
             return service.GetPaymentMethods();
