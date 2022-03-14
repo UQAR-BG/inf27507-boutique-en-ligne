@@ -39,7 +39,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
             ViewData.Add("solde", $"{client.Balance:C}");
 
             if (orders.Count == 0)
-                return RedirectToAction("EmptyOrdersList");
+                return RedirectToAction("EmptyOrdersList", new { balance = client.Balance });
 
             return View(orders);
         }
@@ -76,8 +76,11 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         }
 
         [HttpGet]
-        public IActionResult EmptyOrdersList()
+        public IActionResult EmptyOrdersList(double? balance)
         {
+            if (balance != null)
+                ViewData.Add("solde", $"{balance:C}");
+
             return View();
         }
     }
