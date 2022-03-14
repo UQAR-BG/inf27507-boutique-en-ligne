@@ -73,7 +73,7 @@ namespace INF27507_Boutique_En_Ligne.Services
             return (from carts in _dbContext.Cart
                     join item in _dbContext.CartItems on carts.Id equals item.CartId
                     join product in _dbContext.Products on item.ProductId equals product.Id
-                    where carts.Id == cartId
+                    where carts.Id == cartId && product.Active
                     select item).Sum(i => i.Product.Price * i.Quantity);
         }
 
@@ -99,7 +99,7 @@ namespace INF27507_Boutique_En_Ligne.Services
         {
             return (from item in _dbContext.CartItems
                     join product in _dbContext.Products on item.ProductId equals product.Id
-                    where item.CartId == cartId
+                    where item.CartId == cartId && product.Active
                     select item).ToList();
         }
 
@@ -164,6 +164,7 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.Products
                 .Include(p => p.Colour)
                 .Include(p => p.Seller)
+                .Where(p => p.Active)
                 .ToList();
         }
 
@@ -185,6 +186,13 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.Products.Find(id);
         }
 
+        public bool ProductIsOwnedBy(int productId, int sellerId)
+        {
+            return _dbContext.Products
+                .Where(p => p.SellerId == sellerId && p.Id == productId)
+                .FirstOrDefault() != null;
+        }
+
         public Product UpdateProduct(ProductUpdate update)
         {
             Product product = _dbContext.Products.Find(update.Id);
@@ -198,6 +206,17 @@ namespace INF27507_Boutique_En_Ligne.Services
             }
 
             return product;
+        }
+
+        public void DeleteProduct(int id)
+        {
+            Product product = _dbContext.Products.Find(id);
+
+            if (product != null)
+            {
+                product.Active = false;
+                _dbContext.SaveChanges();
+            }
         }
 
         public List<PaymentMethod> GetPaymentMethods()
@@ -267,8 +286,16 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.Categories.ToList();
         }
 
+        public void UpdateClientInfo(Client client)
+        {
+            _dbContext.Clients.Update(client);
+            _dbContext.SaveChanges();
+        }
+
         private void SaveActiveCart(Cart activeCart)
         {
+            PurgeInactiveItems(activeCart);
+
             List<CartItem> items = GetCartItems(activeCart.Id);
             foreach (CartItem item in items)
                 item.SalePrice = item.Product.Price;
@@ -276,10 +303,14 @@ namespace INF27507_Boutique_En_Ligne.Services
             activeCart.Active = false;
         }
 
-        public void UpdateClientInfo(Client client)
+        private void PurgeInactiveItems(Cart activeCart)
         {
-            _dbContext.Clients.Update(client);
-            _dbContext.SaveChanges();
+            List<CartItem> itemsToPurge = (from item in _dbContext.CartItems
+                                    join product in _dbContext.Products on item.ProductId equals product.Id
+                                    where item.CartId == activeCart.Id && !product.Active
+                                    select item).ToList();
+
+            _dbContext.CartItems.RemoveRange(itemsToPurge);
         }
         
         public void UpdateSellerInfo(Seller seller)
