@@ -6,7 +6,22 @@
 @namespace INF27507_Boutique_En_Ligne.Models
 @model List<Order>
 
-<h1 class="display-4 mt-4">List of previous orders</h1>
+<div class="d-flex justify-content-between mt-5">
+    <strong>Current balance : @ViewData["solde"]</strong>
+    <div>
+        <form asp-controller="Order" asp-action="AddBalance" method="get" class="row">
+            <div class="form-outline mb-4 me-2 col">
+                <input type="number" name="newBalance" id="newBalance" value="0" min="0" class="form-control form-control-lg"/>
+            </div>
+
+            <div class="col">
+                <button type="submit" class="btn btn-success">Ajouter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<h2 class="display-4 mt-4">List of previous orders</h2>
 
 <div class="row mt-2 mb-2">
     <div class="col">

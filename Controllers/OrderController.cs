@@ -35,11 +35,28 @@ namespace INF27507_Boutique_En_Ligne.Controllers
 
             Client client = _database.GetClient(clientId);
             List<Order> orders = _database.GetOrders(client);
+            
+            ViewData.Add("solde", $"{client.Balance:C}");
 
             if (orders.Count == 0)
                 return RedirectToAction("EmptyOrdersList");
 
             return View(orders);
+        }
+
+        [HttpGet]
+        public IActionResult AddBalance(int? newBalance)
+        {
+            int clientId = _authService.GetClientIdIfAuthenticated(HttpContext.Session);
+            if (clientId == 0)
+                return RedirectToAction("Connection", "Client");
+            if (newBalance != null && !(newBalance <= 0))
+            {
+                Client c = _database.GetClient(clientId);
+                _database.UpdateClientBalance(c, (double)-newBalance);
+            }
+
+            return RedirectToAction("ClientOrdersList");
         }
 
         [HttpGet]
