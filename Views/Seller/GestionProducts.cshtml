@@ -13,10 +13,39 @@
                 <div class="card" style="border-radius: 15px;">
                     <div class="card-body p-5">
                         <div class="container">
-                            <form role="form">
+                            
+
+                                <h2 class="text-uppercase text-center mb-5">Gestion Products</h2>
+
+                                 @if (ViewData.ContainsKey("valid"))
+                                {
+                                if ((bool) ViewData["valid"]!)
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">                                        
+                                    </svg>
+                                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="10" height="5" role="img" aria-label="Success:"></svg>
+                                        <div>
+                                            Les modifications apportées ont bien été sauvegardées !
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">                                        
+                                    </svg>
+                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="10" height="5" role="img" aria-label="Danger:"></svg>
+                                        <div>
+                                            Impossible de sauvegarder les infos, veuillez les vérifier !
+                                        </div>
+                                    </div>
+                                }
+                                }
+                                 <form asp-controller="Seller" asp-action="Info" method="post">
                                 <div class="input-group mb-3">
                                      <label for="test"  >titre</label>
-                                        <span><input name="test" id="test"type="text" placeholder="enter your title"/>
+                                        <span><input name="test" id="test"type="text" asp-validation-for="Titre" placeholder="enter your title"/>
                                          <label class="radio-inline">
                                          <input type="radio" name="optradio">homme
                                          </label>
@@ -25,23 +54,24 @@
                                          </label></span>
                                  </div>
                                  <div style="display:flex; flex-direction: row">
-                                         <label for="categorie">categorie:</label>
-                                          <span> <select class="form-control" id="text">
+                                         <label for="categorie"  >categorie:</label>
+                                          <span> <select class="form-control" id="text" asp-validation-for="catégorie" >
                                            <option>text goes there</option>
                                            <option>...</option>
                                            <option>....</option>
                                             </select>
                                            </span>
-                                         <label for="text">prix unitaire</label>
-                                           <span><input type="number" placeholder="number" asp-for="Balance" class="form-control form-control-lg" />
+                                         <label for="text" >Prix Unitaire  </label>
+                                           <span><input type="number" placeholder="number" asp-validation-for="Balance" class="form-control form-control-lg" />
                                            </span>
                                  </div>
                                  <div style="display: flex;flex-direction: row">
-                                         <label for="test">image</label>
-                                         <span><input name="test" id="test" type="text" placeholder="enter your image" />
-                                         <button type="submit" class="btn btn-success btn-lg">Ajouter</button>
+                                         <label for="test" > image</label>
+                                         <span><input name="test" id="test" type="text" asp-validation-for="Image" placeholder="enter your image" />
+                                         <button type="submit" class="btn btn-success btn-lg"  >Ajouter</button>
                                          </span>
                                  </div>
+
                                  <div class="row mt-5 mb-5">
                                    <div class="col-md-6">
                                       <a href="@Model.ImageURL" target="_blank">
@@ -53,8 +83,8 @@
                                    
                                    <div class="col-md-15; d-grip gap-2 d-md-block">
                                      <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
-                                       <label for="titre">Titre:</label>
-                                       <input name="test" id="test" type="text" placeholder="enter your title" />
+                                       <label for="titre" >Titre:</label>
+                                       <input name="test" id="test" type="text" asp-validation-for="Titre" placeholder="enter your title" />
                                      <div class="d-grip gap-2 d-md-block">
                                         <span><button type="submit" class="btn btn-success btn-lg">sauvegarder</button></span>
                                      </div>
@@ -63,7 +93,7 @@
 
                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center" >
                                      <label for="text">prix unitaire</label>
-                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                      <span><input type="number" asp-validation-for="prix unitaire" class="form-control form-control-lg" />
                                        </span>
                                   <div class="col-md-15; d-grip gap-2 d-md-block ">
                                   <br><span><button type="submit" class="btn btn-success btn-lg">supprimer</button></span>
@@ -71,7 +101,7 @@
                                   </div>
                                   <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
                                       <label for="text">quantité disponible</label>
-                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                      <span><input type="number" asp-validation-for="quantité disponible" class="form-control form-control-lg" />
                                       </span>
                                   </div>
                                   </div>
@@ -88,7 +118,7 @@
                                    <div class="col-md-15; d-grip gap-2 d-md-block">
                                      <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
                                        <label for="titre">Titre:</label>
-                                       <input name="test" id="test" type="text" placeholder="enter your title" />
+                                       <input name="test" id="test" type="text" asp-validation-for="Titre" placeholder="enter your title" />
                                      <div class="d-grip gap-2 d-md-block">
                                         <span><button type="submit" class="btn btn-success btn-lg">sauvegarder</button></span>
                                      </div>
@@ -97,7 +127,7 @@
 
                                    <div style="display:flex; flex-direction: row; justify-content: center; align-items: center" >
                                      <label for="text">prix unitaire</label>
-                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                      <span><input type="number" asp-validation-for="prix unitaire" class="form-control form-control-lg" />
                                        </span>
                                   <div class="col-md-15; d-grip gap-2 d-md-block ">
                                   <br><span><button type="submit" class="btn btn-success btn-lg">supprimer</button></span>
@@ -105,7 +135,7 @@
                                   </div>
                                   <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
                                       <label for="text">quantité disponible</label>
-                                      <span><input type="number" asp-for="Balance" class="form-control form-control-lg" />
+                                      <span><input type="number" asp-validation-for="quantité disponible" class="form-control form-control-lg" />
                                       </span>
                                   </div>
                             </div>                                

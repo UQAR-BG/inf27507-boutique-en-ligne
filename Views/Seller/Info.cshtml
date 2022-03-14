@@ -1,0 +1,80 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Seller Page";
+}
+
+@namespace INF27507_Boutique_En_Ligne.Models
+@Model.Seller
+
+
+<div class="mask d-flex align-items-center h-100 gradient-custom-3">
+  <div class="container h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+            <div class="card" style="border-radius: 15px;">
+                <div class="card-body p-5">
+                    
+                        
+
+                       <h1 class="display-4 mt-4 mb-4"> Modifier Information</h1>
+
+                            @if (ViewData.ContainsKey("valid"))
+                                {
+                                if ((bool) ViewData["valid"]!)
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">                                        
+                                    </svg>
+                                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="10" height="5" role="img" aria-label="Success:"></svg>
+                                        <div>
+                                            Les modifications apportées ont bien été sauvegardées !
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">                                        
+                                    </svg>
+                                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                                        <svg class="bi flex-shrink-0 me-2" width="10" height="5" role="img" aria-label="Danger:"></svg>
+                                        <div>
+                                            Impossible de sauvegarder les infos, veuillez les vérifier !
+                                        </div>
+                                    </div>
+                                }
+                                }
+
+                                  <div>
+                                      <form asp-controller="Seller" asp-action="Info" method="post">
+                                      <div class="form-outline mb-4">
+                   
+                                      <label for="form-label">Nom</label>
+                                      <span><input type="text" asp-validation-for="Lastname" class="form-control form-control-lg" /></span>
+                                  </div>
+                                
+                                  <div class="form-outline mb-4">
+               
+                                    <label for="form-label"  >Prénom</label>
+                                    <span><input type="text" asp-validation-for="Firstname" class="form-control form-control-lg" /></span>
+                                  </div>
+                                
+                                  <div class="form-outline mb-4">
+                   
+                                     <label for="form-label" >Identifiant</label>
+                                     <span class="form-text" id="Identifiant" asp-for="Identifiant">Identifiant</span>
+                                  </div>
+
+                                  <div class="d-flex justify-content-center">
+                                      <button type="submit" class="d-grid gap-2 col m-2 p-2 btn btn-success">Modifier</button>
+                                      <button asp-controller="Home" asp-action="Index" class="d-grid gap-2 col m-2 p-2 btn btn-danger">Retour</button>
+                                  </div>
+                                  
+                       </form>
+                    
+                  </div>
+                </div>
+             </div>
+         </div>
+     </div>
+  </div>
+</div>

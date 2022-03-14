@@ -9,7 +9,7 @@ namespace INF27507_Boutique_En_Ligne.Services
         Client GetClient(int Id);
         void AddClient(Client client);
         void UpdateClientInfo(Client client);
-        List<Client> GetClients();
+        List<Client> GetSellers();
         Seller GetSeller(int id);
         void UpdateClientBalance(Client client, double amountToPay);
         List<Product> GetProducts();
@@ -33,6 +33,8 @@ namespace INF27507_Boutique_En_Ligne.Services
         List<Order> GetOrders(Seller seller);
         int CreateOrder(int clientId, PaymentMethod method);
         List<Gender> GetGenders();
+        void AddSeller(Seller seller);
         List<Category> GetCategorys();
+        void UpdateSellerInfo(Seller seller);
     }
 }

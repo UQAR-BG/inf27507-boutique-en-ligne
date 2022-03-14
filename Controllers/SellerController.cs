@@ -1,7 +1,11 @@
 ﻿using INF27507_Boutique_En_Ligne.Models;
+using INF27507_Boutique_En_Ligne.Models.FormData;
 using INF27507_Boutique_En_Ligne.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 
 namespace INF27507_Boutique_En_Ligne.Controllers
 {
@@ -15,36 +19,28 @@ namespace INF27507_Boutique_En_Ligne.Controllers
             _authService = authService;
         }
 
-        public IActionResult ModifierInfo()
+        public IActionResult Connection()
         {
+            ViewBag.Sellers = _database.GetSellers();
+
             return View();
         }
-        public IActionResult Factures()
+
+        [HttpPost]
+        public IActionResult SelectUser(Seller? user = null)
         {
-            return View();
+            if (user == null)
+                return RedirectToAction("Connection");
+            Seller seller = _database.GetSeller(user.Id);
+            if (seller == null || seller.Id == 0)
+                return RedirectToAction("Connection");
+            _authService.SetUser(seller, HttpContext.Session);
+            return RedirectToAction("Index", "Home");
         }
+
         public IActionResult Create()
         {
             return View();
-        }
-        public IActionResult GestionProducts()
-        {
-            return View();
-        }
-        public IActionResult Statistiques()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult Factures(int orderId)
-        {
-            if (!_authService.IsAuthenticated(HttpContext.Session))
-                return RedirectToAction("Index", "Home");
-
-            Order order = _database.GetOrder(orderId);
-
-            return View(order);
         }
 
         [HttpPost]
@@ -52,8 +48,57 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         {
             if (seller == null)
                 return RedirectToAction("Create");
-            _database.AddUser(seller);
+            _database.AddSeller(seller);
             return RedirectToAction("Connection");
         }
+
+        public IActionResult Info()
+        {
+            if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
+                return RedirectToAction("Connection");
+            Seller seller = _database.GetSeller(_authService.GetSellerIdIfAuthenticated(HttpContext.Session));
+            return View(new SellerInfo()
+            {
+                LastName = seller.Lastname,
+                Firstname = seller.Firstname,
+                Identifiant = seller.Username
+            });
+        }
+        [HttpPost]
+        public IActionResult Info(Seller vendeur)
+        {
+            if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
+                return RedirectToAction("Connection");
+            if (ModelState.IsValid)
+            {
+                ViewData.Add("valid", true);
+                Seller seller = _database.GetSeller(_authService.GetSellerIdIfAuthenticated(HttpContext.Session));
+                seller.Firstname = vendeur.Firstname;
+                seller.Lastname = vendeur.Lastname;
+                _database.UpdateSellerInfo(seller);
+            }
+            else
+            {
+                ViewData.Add("valid", false);
+            }
+            return View(vendeur);
+        }
+
+        public IActionResult Statistiques()
+        {
+            if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
+                return RedirectToAction("Connection");
+            Seller seller = _database.GetSeller(_authService.GetSellerIdIfAuthenticated(HttpContext.Session));
+            List<Order> orders = _database.GetOrders(seller);
+            Dictionary<string, string> data = new Dictionary<string, string>
+        {
+            {"total", orders.Sum(o => o.Cart.Items.Sum(i=>i.Quantity*i.SalePrice)).ToString("F", CultureInfo.CreateSpecificCulture("fr-FR"))},
+            {"art", orders.Sum(o => o.Cart.Items.Sum(i => i.Quantity)).ToString("N0", CultureInfo.CreateSpecificCulture("fr-FR"))}
+        };
+            return View(data);
+        }
+
+
     }
 }
+

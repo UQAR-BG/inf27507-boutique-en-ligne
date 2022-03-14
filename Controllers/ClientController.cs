@@ -22,7 +22,7 @@ public class ClientController : Controller
 
     public IActionResult Connection()
     {
-        ViewBag.Clients = _database.GetClients();
+        ViewBag.Clients = _database.GetSellers();
         
         return View();
     }
