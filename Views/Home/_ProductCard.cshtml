@@ -23,6 +23,7 @@
             </div>
             @{
                 string? username = HttpContextAccessor.HttpContext.Session.GetString("Username");
+                int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
                 string? userType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
                 if (username != null && userType.Equals(UserType.Client.ToString()))
                 {
@@ -34,14 +35,19 @@
                         </div>
                     </div>
                 }
+                else if (userId != null && 
+                         userType.Equals(UserType.Seller.ToString()) && 
+                         userId == @Model.SellerId)
+                {
+                    <div class="row mt-2 mb-2">
+                        <div class="text-center text-sm-end">
+                            <form asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" method="get">
+                                <button type="submit" class="btn btn-success btn-over-streched-link">Edit Product</button>
+                            </form>
+                        </div>
+                    </div>
+                }
             }
-            <div class="row mt-2 mb-2">
-                <div class="text-center text-sm-end">
-                    <form asp-controller="Product" asp-action="Edit" asp-route-id="@Model.Id" method="get">
-                        <button type="submit" class="btn btn-success btn-over-streched-link">Edit Product</button>
-                    </form>
-                </div>
-            </div>
         </div>
         <a 
             asp-controller="Product" 

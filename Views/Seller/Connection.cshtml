@@ -1,0 +1,50 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewBag.Title = "Seller connection";
+    Layout = "_Layout";
+}
+
+@model Seller
+
+<section class="vh-100 bg-image">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">Connexion</h2>
+
+                            <form asp-controller="Seller" asp-action="SelectUser" method="post">
+                                
+                                <div class="form-outline mb-4 row">
+                                    <label class="col-sm-2 col-form-label" asp-for="Id">Seller</label>
+                                    <div class="col-sm-10">
+                                        <select asp-for="Id" class="form-select" aria-label="Default select example">
+                                            @foreach (Seller u in @ViewBag.Sellers)
+                                            {
+                                                <option value="@u.Id">@u.Firstname - @u.Lastname</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <span class="text-danger" asp-validation-for="Id"></span>
+                                </div>
+
+                                <div class="d-grid gap-2 mb-3">
+                                    <button type="submit" class="btn btn-success">Se connecter</button>
+                                </div>
+
+                            </form>
+                            <a asp-controller="Seller" asp-action="Create" class="d-grid gap-2 mb-3 btn btn-success">
+                                Créer un nouveau compte
+                            </a>
+                            <a asp-controller="Client" asp-action="Connection" class="d-grid gap-2 mb-3 btn btn-outline-primary">
+                                Aller à l'interface client
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -137,6 +137,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetProductForValidation(id);
         }
 
+        public bool ProductIsOwnedBy(int productId, int sellerId)
+        {
+            return service.ProductIsOwnedBy(productId, sellerId);
+        }
+
         public Product UpdateProduct(ProductUpdate update)
         {
             return service.UpdateProduct(update);

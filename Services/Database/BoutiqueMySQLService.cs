@@ -186,6 +186,13 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.Products.Find(id);
         }
 
+        public bool ProductIsOwnedBy(int productId, int sellerId)
+        {
+            return _dbContext.Products
+                .Where(p => p.SellerId == sellerId && p.Id == productId)
+                .FirstOrDefault() != null;
+        }
+
         public Product UpdateProduct(ProductUpdate update)
         {
             Product product = _dbContext.Products.Find(update.Id);

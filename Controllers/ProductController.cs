@@ -7,10 +7,12 @@ namespace INF27507_Boutique_En_Ligne.Controllers
     public class ProductController : Controller
     {
         private readonly IDatabaseAdapter _database;
+        private readonly IAuthentificationAdapter _authService;
 
-        public ProductController(IDatabaseAdapter database)
+        public ProductController(IDatabaseAdapter database, IAuthentificationAdapter authService)
         {
             _database = database;
+            _authService = authService;
         }
 
         [HttpGet]
@@ -26,6 +28,9 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
+            if (!CanManageProduct(id))
+                return RedirectToAction("Index", "Home");
+
             ViewBag.Product = _database.GetProduct(id);
 
             return View();
@@ -34,6 +39,9 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpPost]
         public IActionResult Edit(ProductUpdate product)
         {
+            if (!CanManageProduct(product.Id))
+                return RedirectToAction("Index", "Home");
+
             if (ModelState.IsValid)
             {
                 ViewData.Add("valid", true);
@@ -51,6 +59,9 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
+            if (!CanManageProduct(id))
+                return RedirectToAction("Index", "Home");
+
             _database.DeleteProduct(id);
 
             return RedirectToAction("Index", "Home");
@@ -60,6 +71,20 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         public IActionResult NotFound()
         {
             return View();
+        }
+
+        private bool CanManageProduct(int productId)
+        {
+            bool canManage = true;
+
+            int sellerId = _authService.GetSellerIdIfAuthenticated(HttpContext.Session);
+            if (sellerId == 0)
+                canManage = false;
+
+            if (!_database.ProductIsOwnedBy(productId, sellerId))
+                canManage = false;
+
+            return canManage;
         }
     }
 }
