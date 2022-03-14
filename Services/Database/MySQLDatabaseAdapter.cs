@@ -87,6 +87,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetCartItems(cartId);
         }
 
+        public List<CartItem> GetCartItems(Seller seller)
+        {
+            return service.GetCartItems(seller);
+        }
+
         public CartItem GetCartItem(int cartId, int productId)
         {
             return service.GetCartItem(cartId, productId);

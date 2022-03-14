@@ -26,6 +26,7 @@ namespace INF27507_Boutique_En_Ligne.Services
         Cart CreateActiveCart(int clientId);
         Cart CreateActiveCartIfNotExist(int clientId);
         List<CartItem> GetCartItems(int cartId);
+        List<CartItem> GetCartItems(Seller seller);
         CartItem GetCartItem(int cartId, int productId);
         void AddItem(int clientId, int productId, int quantity);
         void AddItem(CartItem item);

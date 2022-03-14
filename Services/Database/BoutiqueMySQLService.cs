@@ -103,6 +103,17 @@ namespace INF27507_Boutique_En_Ligne.Services
                     select item).ToList();
         }
 
+        public List<CartItem> GetCartItems(Seller seller)
+        {
+            return (from products in _dbContext.Products
+                    join sellers in _dbContext.Sellers on products.SellerId equals seller.Id
+                    join items in _dbContext.CartItems on products.Id equals items.ProductId
+                    join carts in _dbContext.Cart on items.CartId equals carts.Id
+                    join orders in _dbContext.Orders on carts.Id equals orders.CartId
+                    where !carts.Active
+                    select items).ToList();
+        }
+
         public CartItem GetCartItem(int cartId, int productId)
         {
             return (from item in _dbContext.CartItems

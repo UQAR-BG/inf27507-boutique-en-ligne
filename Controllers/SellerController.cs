@@ -86,7 +86,22 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         [HttpGet]
         public IActionResult Stats()
         {
-            return null;
+            Seller seller = _database.GetSeller(_authService.GetSellerIdIfAuthenticated(HttpContext.Session));
+            if (seller == null)
+                return RedirectToAction("Connection");
+
+            List<CartItem> items = _database.GetCartItems(seller);
+            double total = items.Sum(i => i.Quantity * i.SalePrice);
+            double profits = total * 0.15;
+            int quantity = items.Sum(i => i.Quantity);
+
+            Dictionary<string, string> data = new Dictionary<string, string>
+            {
+                { "total", string.Format("{0:C}", total) },
+                { "profits", string.Format("{0:C}", profits) },
+                { "quantity", quantity.ToString() }
+            };
+            return View(data);
         }
     }
 }

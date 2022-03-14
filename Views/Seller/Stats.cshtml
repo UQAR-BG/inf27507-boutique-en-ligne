@@ -1,0 +1,40 @@
+﻿@model Dictionary<string, string>
+
+@{
+    ViewBag.Title = "Statistiques";
+    Layout = "_Layout";
+}
+
+<main class="container">
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-2 mb-0">Statistiques</h6>
+        <div class="d-flex pt-3">
+            <i class="fa-solid fa-cart-arrow-down me-4" style="font-size: xx-large"></i>
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark">Total des sommes reçues</strong>
+                    <strong class="text-gray-dark">@Model.GetValueOrDefault("total", "none")</strong>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex pt-3">
+            <i class="fa-solid fa-hand-holding-dollar me-4" style="font-size: xx-large"></i>
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark">Gains sur les ventes (15%)</strong>
+                    <strong class="text-gray-dark">@Model.GetValueOrDefault("profits", "none")</strong>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex pt-3">
+            <i class="fa-solid fa-cart-flatbed me-4" style="font-size: xx-large"></i>
+            <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
+
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark">Nombre d'articles vendus</strong>
+                    <strong class="text-gray-dark">@Model.GetValueOrDefault("quantity", "none")</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
