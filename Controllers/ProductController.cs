@@ -26,6 +26,35 @@ namespace INF27507_Boutique_En_Ligne.Controllers
         }
 
         [HttpGet]
+        public IActionResult Add()
+        {
+            if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
+                return RedirectToAction("Index", "Home");
+
+            PrepareViewBagToFillProductInfo();
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Add(Product product)
+        {
+            if (!_authService.IsAuthenticatedAsSeller(HttpContext.Session))
+                return RedirectToAction("Index", "Home");
+
+            if (!ModelState.IsValid)
+            {
+                PrepareViewBagToFillProductInfo();
+                return View();
+            }
+
+            product.ImageURL = "";
+            product = _database.AddProduct(product);
+
+            return RedirectToAction("ProductPage", new { id = product.Id });
+        }
+
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             if (!CanManageProduct(id))
@@ -85,6 +114,16 @@ namespace INF27507_Boutique_En_Ligne.Controllers
                 canManage = false;
 
             return canManage;
+        }
+
+        private void PrepareViewBagToFillProductInfo()
+        {
+            ViewBag.Genders = _database.GetGenders();
+            ViewBag.Usages = _database.GetUsages();
+            ViewBag.Colours = _database.GetColours();
+            ViewBag.Categories = _database.GetCategories();
+            ViewBag.SubCategories = _database.GetSubCategories();
+            ViewBag.ProductTypes = _database.GetProductTypes();
         }
     }
 }

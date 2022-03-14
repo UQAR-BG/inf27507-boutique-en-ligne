@@ -204,6 +204,14 @@ namespace INF27507_Boutique_En_Ligne.Services
                 .FirstOrDefault() != null;
         }
 
+        public Product AddProduct(Product product)
+        {
+            _dbContext.Products.Add(product);
+            _dbContext.SaveChanges();
+
+            return product;
+        }
+
         public Product UpdateProduct(ProductUpdate update)
         {
             Product product = _dbContext.Products.Find(update.Id);
@@ -292,9 +300,29 @@ namespace INF27507_Boutique_En_Ligne.Services
             return _dbContext.Genders.ToList();
         }
 
-        public List<Category> GetCategorys()
+        public List<Usage> GetUsages()
+        {
+            return _dbContext.Usages.ToList();
+        }
+
+        public List<Colour> GetColours()
+        {
+            return _dbContext.Colours.ToList();
+        }
+
+        public List<Category> GetCategories()
         {
             return _dbContext.Categories.ToList();
+        }
+
+        public List<SubCategory> GetSubCategories()
+        {
+            return _dbContext.SubCategories.ToList();
+        }
+
+        public List<ProductType> GetProductTypes()
+        {
+            return _dbContext.ProductTypes.ToList();
         }
 
         public void UpdateClientInfo(Client client)

@@ -1,0 +1,135 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    ViewBag.Title = "Add a new product";
+    Layout = "_Layout";
+}
+
+@model Product
+
+<section class="vh-100 bg-image">
+    <div class="mask d-flex align-items-center h-100 gradient-custom-3">
+        <div class="container h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-9 col-lg-7 col-xl-6">
+                    <div class="card" style="border-radius: 15px;">
+                        <div class="card-body p-5">
+                            <h2 class="text-uppercase text-center mb-5">New product</h2>
+
+                            <form asp-controller="Product" asp-action="Add" method="post">
+                                @{
+                                    int? userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
+                                }
+                                <input asp-for="SellerId" type="hidden" value="@userId" />
+                                <input asp-for="Active" type="hidden" value="true" />
+                                <input asp-for="ImageURL" type="hidden" value="A URL" />
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Title" class="form-control form-control-lg"/>
+                                    <label class="form-label" asp-for="Title">Title</label>
+                                    <span class="text-danger" asp-validation-for="Title"></span>
+                                </div>
+                                
+                                <div class="form-outline mb-4">
+                                    <input type="number" asp-for="Price" step="any" class="form-control form-control-lg"/>
+                                    <label class="form-label" asp-for="Price">Price</label>
+                                    <span class="text-danger" asp-validation-for="Price"></span>
+                                </div>
+                                
+                                <div class="form-outline mb-4">
+                                    <input type="text" asp-for="Image" class="form-control form-control-lg"/>
+                                    <label class="form-label" asp-for="Image">Image</label>
+                                    <span class="text-danger" asp-validation-for="Image"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <select class="form-select" asp-for="GenderId">
+                                        @{
+                                            foreach(Gender gender in ViewBag.Genders)
+                                            {
+                                                <option value="@gender.Id">@gender.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-label" asp-for="GenderId">Gender</label>
+                                    <span class="text-danger" asp-validation-for="GenderId"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <select class="form-select" asp-for="ColourId">
+                                        @{
+                                            foreach(Colour colour in ViewBag.Colours)
+                                            {
+                                                <option value="@colour.Id">@colour.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-label" asp-for="ColourId">Colour</label>
+                                    <span class="text-danger" asp-validation-for="ColourId"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <select class="form-select" asp-for="UsageId">
+                                        @{
+                                            foreach(Usage usage in ViewBag.Usages)
+                                            {
+                                                <option value="@usage.Id">@usage.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-label" asp-for="UsageId">Usage</label>
+                                    <span class="text-danger" asp-validation-for="UsageId"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <select class="form-select" asp-for="CategoryId">
+                                        @{
+                                            foreach(Category category in ViewBag.Categories)
+                                            {
+                                                <option value="@category.Id">@category.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-label" asp-for="CategoryId">Category</label>
+                                    <span class="text-danger" asp-validation-for="CategoryId"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <select class="form-select" asp-for="SubCategoryId">
+                                        @{
+                                            foreach(SubCategory subCategory in ViewBag.SubCategories)
+                                            {
+                                                <option value="@subCategory.Id">@subCategory.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-label" asp-for="SubCategoryId">Sub Category</label>
+                                    <span class="text-danger" asp-validation-for="SubCategoryId"></span>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <select class="form-select" asp-for="ProductTypeId">
+                                        @{
+                                            foreach(ProductType type in ViewBag.ProductTypes)
+                                            {
+                                                <option value="@type.Id">@type.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <label class="form-label" asp-for="ProductTypeId">Product Type</label>
+                                    <span class="text-danger" asp-validation-for="ProductTypeId"></span>
+                                </div>
+
+                                <div class="d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-success btn-lg">Add</button>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

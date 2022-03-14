@@ -147,6 +147,11 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.ProductIsOwnedBy(productId, sellerId);
         }
 
+        public Product AddProduct(Product product)
+        {
+            return service.AddProduct(product);
+        }
+
         public Product UpdateProduct(ProductUpdate update)
         {
             return service.UpdateProduct(update);
@@ -187,9 +192,29 @@ namespace INF27507_Boutique_En_Ligne.Services
             return service.GetGenders();
         }
 
-        public List<Category> GetCategorys()
+        public List<Usage> GetUsages()
         {
-            return service.GetCategorys();
+            return service.GetUsages();
+        }
+
+        public List<Colour> GetColours()
+        {
+            return service.GetColours();
+        }
+
+        public List<Category> GetCategories()
+        {
+            return service.GetCategories();
+        }
+
+        public List<SubCategory> GetSubCategories()
+        {
+            return service.GetSubCategories();
+        }
+
+        public List<ProductType> GetProductTypes()
+        {
+            return service.GetProductTypes();
         }
     }
 }

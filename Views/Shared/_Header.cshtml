@@ -58,6 +58,16 @@
                                        asp-action="Stats">
                                         <i class="fa-solid fa-chart-area"></i> Stats
                                     </a>
+                                    @{
+                                        if (userType.Equals(UserType.Seller.ToString()))
+                                        {
+                                            <a class="dropdown-item"
+                                               asp-controller="Product"
+                                               asp-action="Add">
+                                               <i class="fa-solid fa-plus"></i> Add a product
+                                            </a>
+                                        }
+                                    }
                                 </div>
                             </li>
                             if (userType.Equals(UserType.Client.ToString()))

@@ -19,6 +19,7 @@ namespace INF27507_Boutique_En_Ligne.Services
         Product GetProduct(int id);
         Product GetProductForValidation(int id);
         bool ProductIsOwnedBy(int productId, int sellerId);
+        Product AddProduct(Product product);
         Product UpdateProduct(ProductUpdate update);
         void DeleteProduct(int id);
         Cart GetActiveCart(int clientId);
@@ -40,6 +41,10 @@ namespace INF27507_Boutique_En_Ligne.Services
         List<Order> GetOrders(Seller seller);
         int CreateOrder(int clientId, PaymentMethod method);
         List<Gender> GetGenders();
-        List<Category> GetCategorys();
+        List<Usage> GetUsages();
+        List<Colour> GetColours();
+        List<Category> GetCategories();
+        List<SubCategory> GetSubCategories();
+        List<ProductType> GetProductTypes();
     }
 }

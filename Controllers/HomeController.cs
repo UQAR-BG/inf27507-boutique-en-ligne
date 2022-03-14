@@ -25,7 +25,7 @@ namespace INF27507_Boutique_En_Ligne.Controllers
 
             List<Product> products = _database.GetProducts();
             ViewData.Add("Search", search);
-            ViewBag.cat = _database.GetCategorys();
+            ViewBag.cat = _database.GetCategories();
             ViewBag.FilterForm = new Filter()
                 {
                     CategoryID = 0,
