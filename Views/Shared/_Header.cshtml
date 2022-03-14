@@ -29,11 +29,11 @@
                         string? userType = HttpContextAccessor.HttpContext.Session.GetString("UserType");
                         if (username != null)
                         {
-                            <li class="nav-item dropdown active">
+                            <li class="nav-item dropdown active mx-2">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdownMenu" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-circle-user"></i> @username
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="userDropdownMenu">
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdownMenu">
                                     <a 
                                         class="dropdown-item" 
                                         asp-controller="Order" 
